@@ -1,0 +1,210 @@
+<%- include('../partials/user/header.ejs')  %> 
+<%- include('../partials/user/navigation.ejs')  %> 
+
+<section id="main-post-section">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-8 col-sm-12 l-post">
+                <!-- Latest posts -->
+                <h2 class="m-4">Explore Posts</h2>
+                <section class="mb-5 ml-2">
+                    <a href="/dashboard?filter=latest" class="mr-1 btn <%= filter ==='latest' ? 'btn-danger' :' btn-dark ' %>  btn-danger">Latest</a>
+                    <a href="/dashboard?filter=week" class="mr-1 btn  <%= filter ==='week' ? 'btn-danger' :' btn-dark ' %>">Week</a>
+                    <a href="/dashboard?filter=month" class="mr-1 btn <%= filter ==='month' ? 'btn-danger' :' btn-dark '%>">Month</a>
+                    <a href="/dashboard?filter=all" class="mr-1 btn <%= filter ==='all' ? 'btn-danger' :' btn-dark ' %>">All</a>
+                </section>
+                <div class="row mb-5" >
+                    <% post.forEach(p=>{ %>
+                    <div class="col-md-6 ">
+                        <!-- <a href="./blog-single.html"></a> -->
+                            <div class="card wow fadeInUp l-post-card">
+                                <img class="card-img-top img-fluid" src="<%=p.thumbnail %> " alt="Card image cap">
+                                <div class="card-body">
+                                   <a href="<%=`/dashboard/post/${p._id}`%> "> <h4 class="card-title"><%=p.title %> </h4></a>
+                                    <div class="d-flex author-post text-muted">
+                                        <span><img class="mr-2 img-fluid" src="<%=p.author.profileImage %> " alt=""></span>
+                                        <span class="mr-2"> <%=p.author.username  %>  &nbsp;&bullet;</span>
+                                        <span><%=moment(p.createdAt).fromNow() %> </span>
+                                       <% if(user){%>
+                                            <span class="ml-auto bookmark" data-post="<%=p._id %>">
+                                                <% if (bookmarks.includes(p._id)) { %>
+                                                    <i class="fas fa-bookmark"></i>
+                                                <% } else { %>
+                                                    <i class="far fa-bookmark"></i>
+                                                <% } %> 
+                                                 
+                                            </span>
+
+
+                                      <% } %> 
+                                    </div>
+                                </div>
+                            </div>
+                        <!-- </a> -->
+                    </div>
+                  <%  }) %> 
+                </div>
+
+                <!-- Pagination -->
+                <section id="paginationID">
+                    <div class="row">
+                        <div class="m-auto">
+                            <% if (totalPage > 1) { %>
+                                <nav>
+                                    <ul class="pagination">
+                                        <li class="page-item mr-2 <%= currentPage === 1 ? 'disabled' : '' %>" >
+                                            <a class="page-link" href="<%= `/dashboard?filter=${filter}&page=${currentPage - 1}`%>">
+                                                
+                                                Previous
+                                            </a>
+                                           
+                                        </li>
+                
+                                        <% for (let i=1; i<=totalPage; i++) { %>
+                                            <li class="page-item mr-2 <%= currentPage === i ? 'active' : '' %>" >
+                                                <a class="page-link" href="<%= `/dashboard?filter=${filter}&page=${i}`%>">
+                                                    <%= i %>
+                                                </a>
+                                            </li>
+                                        <% } %>
+                
+                                        <li class="page-item <%= currentPage === totalPage ? 'disabled' : '' %>" >
+                                            <a class="page-link" href="<%= `/dashboard?filter=${filter}&page=${currentPage + 1}`%>">
+                                                Next
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </nav>
+                            <% } %>
+                        </div>
+                
+                    </div>
+                
+                </section>
+
+            </div>
+            <!-- sidebar -->
+            <div class="col-md-4 col-sm-12 r-post">
+                <div class="md-form mt-2">
+                    <input class="form-control search-box" type="text" placeholder="Search" aria-label="Search">
+                </div>
+                <div class="d-flex justify-content-center">
+                    <div class="card pr mt-5">
+                        <div class="card-body text-center bio-card">
+                            <img class="card-img-top rounded-circle" src="./img/original.jpg" alt="Card image cap">
+                            <h4 class="card-title">Minhajul Abedin Shafin</h4>
+                            <h6 class="card-subtitle mb-2 text-muted">Card subtitle</h6>
+                            <p class="card-text">
+                                Some quick example text to build on the card title
+                                and make up the bulk of the card's content.
+                            </p>
+
+                            <button class="btn btn-primary d-flex m-auto">Read my bio</button>
+
+                            <div class="social-links mt-3">
+                                <a href="#" class="mr-2"> <i class="fab fa-facebook"></i></a>
+                                <a href="#" class="mr-2"> <i class="fab fa-twitter-square"></i></i></a>
+                                <a href="#" class="mr-2"> <i class="fab fa-instagram"></i></a>
+                                <a href="#" class="mr-2"> <i class="fab fa-youtube"></i></a>
+
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- popular posts -->
+                <div class="p-post">
+                    <h2 class="text-center my-3">Popular posts</h2>
+                    <hr>
+                    <ul>
+                        <li>
+                            <a href="#">
+                                <div class="media">
+                                    <img class="mr-3" src="./img/image1.jpg" alt="Generic placeholder image"
+                                        width="80" height="50">
+                                    <div class="media-body">
+                                        <h5 class="mt-0">How to Find the Video Games of Your Youth</h5>
+                                        <div class="time-comment mt-2">
+                                            <span class="mr-2">March 15, 2018 </span>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#">
+                                <div class="media">
+                                    <img class="mr-3" src="./img/image2.jpeg" alt="Generic placeholder image"
+                                        width="80" height="50">
+                                    <div class="media-body">
+                                        <h5 class="mt-0">How to Find the Video Games of Your Youth</h5>
+                                        <div class="time-comment mt-2">
+                                            <span class="mr-2">March 15, 2018 </span>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#">
+                                <div class="media">
+                                    <img class="mr-3" src="./img/image3.jpg" alt="Generic placeholder image"
+                                        width="80" height="50">
+                                    <div class="media-body">
+                                        <h5 class="mt-0">How to Find the Video Games of Your Youth</h5>
+                                        <div class="time-comment">
+                                            <span class="mr-2">March 15, 2018 </span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+                <!-- Categories -->
+                <div class="category-box">
+                    <h3 class="heading">Categories</h3>
+                    <ul class="categories  text-start">
+                        <li><a href="#">Food <span>(12)</span></a></li>
+                        <li><a href="#">Travel <span>(22)</span></a></li>
+                        <li><a href="#">Lifestyle <span>(37)</span></a></li>
+                        <li><a href="#">Business <span>(42)</span></a></li>
+                        <li><a href="#">Adventure <span>(14)</span></a></li>
+                    </ul>
+                </div>
+                <!-- Tags -->
+                <div class="tags mt-5">
+                    <h4>Tags</h4>
+                    <hr>
+                    <ul class="tags">
+                        <li><a href="#">Travel</a></li>
+                        <li><a href="#">Adventure</a></li>
+                        <li><a href="#">Food</a></li>
+                        <li><a href="#">Lifestyle</a></li>
+                        <li><a href="#">Business</a></li>
+                        <li><a href="#">Freelancing</a></li>
+                        <li><a href="#">Travel</a></li>
+                        <li><a href="#">Adventure</a></li>
+                        <li><a href="#">Food</a></li>
+                        <li><a href="#">Lifestyle</a></li>
+                        <li><a href="#">Business</a></li>
+                        <li><a href="#">Freelancing</a></li>
+                    </ul>
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+</section><br>
+<!-- Pagination  -->
+
+
+
+<%- include('../partials/user/footer.ejs')  %> 
+
+<script src="/js/bookmarks.js"></script>
+</body>
+</html>

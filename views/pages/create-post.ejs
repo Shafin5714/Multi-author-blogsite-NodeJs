@@ -1,0 +1,89 @@
+<%- include('../partials/user/header.ejs')  %> 
+<%- include('../partials/user/navigation.ejs')  %> 
+<div class="container">
+    <div class="row">
+        <div class="col-md-3">
+            <%- include('../partials/user/sidebar.ejs') %>
+        </div>
+
+        <div class="col-md-9 my-5">
+            <div class="row">
+                <div class="col-md-10">
+                    <div class="card card-body">
+                        <h5 class="my-3">Create A New Post</h5>
+                        <form action="/user/posts/create" method="POST" enctype="multipart/form-data">
+                            <div class="form-group">
+                                <label for="title">Enter Your Post Title</label>
+                                <input type="text" name="title" id="title" class="form-control
+                                <%= error.title ? 'is-invalid' : '' %>"  value="<%= typeof title != 'undefined' ? title : '' %>"> 
+                                <div class="invalid-feedback">
+                                    <% if(error.title) {%> 
+                                    <%= error.title.msg %> 
+                                    <% } %> 
+                                </div>
+                
+                            </div>
+                            <div class="form-group">
+                                <label for="tiny-mce-post-body">Enter Your Post Body</label>
+                                <textarea name="body" id="tiny-mce-post-body"
+                                    class="form-control <%= error.body ? 'is-invalid' : '' %>" ><%= typeof body != 'undefined' ? body : '' %></textarea>
+                                    <div class="invalid-feedback">
+                                        <% if(error.body){ %> 
+                                        <%= error.body.msg %>
+                                        <% } %> 
+                                    </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="exampleFormControlSelect1">Select Category</label>
+                                <select name="category" class="form-control <%= error.category ? 'is-invalid' : '' %>" id="exampleFormControlSelect1">
+                                  <option value="">--Select--</option>
+                                  <option value="Technology">Technology</option>
+                                  <option value="Lifestyle">Lifestyle</option>
+                                  <option value="Food">Food</option>
+                                  <option value="Travel">Travel</option>
+                                  <option value="Business">Business</option>
+                                  <option value="Adventure">Adventure</option>
+                                </select>
+                                <div class="invalid-feedback">
+                                    <% if(error.category){ %> 
+                                    <%= error.category.msg %>
+                                    <% } %> 
+                                </div>
+                              </div>
+                            <div class="form-group">
+                                <label for="tags"> Enter Some Tags (Max 10) </label>
+                                <input type="text" name="tags" id="tags" placeholder="tag1, tag2, tag3"
+                                    class="form-control" value="<%= typeof tags != 'undefined' ? tags : '' %>">
+                            </div>
+                            <div class="input-group mb-3">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text">Upload</span>
+                                </div>
+                                <div class="custom-file">
+                                    <input type="file" name="post-thumbnail" class="custom-file-input"
+                                        id="inputGroupFile">
+                                    <label for="inputGroupFile" class="custom-file-label">Choose File</label>
+                                </div>
+                            </div>
+                            <input type="submit" class="btn btn-primary" value="Create Post">
+                            
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<%- include('../partials/user/footer.ejs')  %> 
+<script>
+    $('#inputGroupFile').on('change', function (e) {
+        let filename = e.target.files[0].name
+        $(this).next('.custom-file-label').html(filename)
+    })
+</script>
+<script src="https://cdn.tiny.cloud/1/su235srv32562qx71cmdzgcoxspqhgimqvnd6397iqlbpim1/tinymce/5/tinymce.min.js" referrerpolicy="origin"></script>
+<script src="/js/tinymce.js"></script>
+
+</body>

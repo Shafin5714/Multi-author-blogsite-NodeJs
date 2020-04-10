@@ -1,0 +1,148 @@
+<%- include('../partials/user/header.ejs')  %> 
+<%- include('../partials/user/navigation.ejs')  %> 
+<div class="container-fluid">
+<div class="container">
+    <div class="row">
+        <div class="col-md-3">
+            <%- include('../partials/user/sidebar.ejs') %>
+        </div>
+        <div class="col-md-9">
+            <div class="row">
+                <div class="col-md-8">
+                    <div class="card card-body my-5">
+                        <h4>Edit Profile</h4>
+                        <div class="profile-pics">
+                            <img src="<%= user.profileImage %>" alt="Profile Pics" class="img-thumbnail img-fluid"
+                                id="profilePics">
+                            <form action="/uploads/profilePics" class="my-2" id="profilePicsForm">
+                                <input type="file" name="profilePics" id="profilePicsFile" accept="image/*" />
+                                <input type="button" value="Remove Pics" id="removeProfilePics"
+                                    class="btn btn-danger btn-sm my-2">
+                            </form>
+                        </div>
+                        <div>
+                            <form action="/user/create-profile" method="POST">
+                                <div class="form-group">
+                                    <label for="name">Enter Your Name</label>
+                                    <input 
+                                        type="text" 
+                                        class="form-control" 
+                                        name="name" 
+                                        placeholder="Enter Your Name"
+                                      
+                                        id="name">
+                                </div>
+                                <div class="form-group">
+                                    <label for="title">Enter A Short Title</label>
+                                    <input 
+                                        type="text" 
+                                        class="form-control" 
+                                        name="title"
+                                   
+                                        placeholder="Enter A Short Title" 
+                                        id="title">
+                                </div>
+                                <div class="form-group">
+                                    <label for="bio">Enter A Short Bio</label>
+                                    <textarea 
+                                        name="bio" 
+                                        id="bio" 
+                                        class="form-control"
+                                        ></textarea>
+                                    <div class="invalid-feedback">
+                                       
+                                    </div>
+                                </div>
+                                <div>
+                                    <p class="lead"> Your Social Links</p>
+                                    <div class="input-group mb-3">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text">
+                                                <i class="fab fa-internet-explorer"></i>
+                                            </span>
+                                        </div>
+                                        <input 
+                                            type="text" 
+                                            class="form-control" 
+                                            placeholder="Website Link"
+                                         
+                                            name="website">
+                                      
+                                    </div>
+                                    <div class="input-group mb-3">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text">
+                                                <i class="fab fa-facebook-square"></i>
+                                            </span>
+                                        </div>
+                                        <input 
+                                            type="text" 
+                                            class="form-control" 
+                                            placeholder="Facebook Link"
+                                            
+                                            name="facebook">
+                                    </div>
+                                    <div class="input-group mb-3">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text">
+                                                <i class="fab fa-twitter-square"></i>
+                                            </span>
+                                        </div>
+                                        <input 
+                                            type="text" 
+                                            class="form-control" 
+                                            placeholder="Twitter Link"
+                                          
+                                            name="twitter">
+                                    </div>
+                                    <div class="input-group mb-3">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text">
+                                                <i class="fab fa-github-square"></i>
+                                            </span>
+                                        </div>
+                                        <input 
+                                            type="text" 
+                                            class="form-control" 
+                                            placeholder="Github Link" 
+
+                                            name="github">
+                                    </div>
+                                </div>
+                                <input type="submit" class="btn btn-primary" value="Update Profile">
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade bd-example-modal-lg" id="crop-modal" role="dialog"
+        aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalCenterTitle">Resize Your Image</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div id="cropped-image"></div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" id="cancel-cropping">Cancel</button>
+                    <button type="button" id="upload-image" class="btn btn-primary">Upload</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+</div>
+
+
+<%- include('../partials/user/footer.ejs')  %> 
+
+</body>

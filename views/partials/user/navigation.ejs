@@ -1,0 +1,65 @@
+
+<body>
+    <div class="container">
+        <section id="header">
+            <div class="d-flex justify-content-center py-2">
+                <div class="logo">
+                    <a href="/"><img src="/img/logp.png" alt="" height="100px"></a>
+                </div>
+                <% if(!user){ %> 
+                <div class="login-reg  mt-4">
+                        <a style="color: rgb(108, 160, 150);" href="/login" class="mr-1"><i class="fas fa-sign-in-alt"></i>login</a>
+                        <a style="color: #445045;" href="/register"><i class="fas fa-sign-out-alt"></i>register</a>
+                </div>
+                <% }  %> 
+            </div>
+
+
+        </section>
+    </div>
+<!-- Navbar -->
+<nav class="navbar navbar-expand-sm navbar-light bg-light">
+    <div class="container">
+        <button class="navbar-toggler" data-toggle="collapse" data-target="#navbarCollapse">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav m-auto">
+                <li class="nav-item active">
+                    <a href="/" class="nav-link">HOME</a>
+                </li>
+                <li class="nav-item dropdown">
+                    <% if(user){ %> 
+                    <a class="nav-link dropdown-toggle" href="category.html" data-toggle="dropdown"
+                        aria-haspopup="true" aria-expanded="false">PROFILE</a>
+                    <div class="dropdown-menu" aria-labelledby="dropdown05">
+                        <a class="dropdown-item" href="/user/profile/<%=user.profile%>">View Profile</a>
+                        <a class="dropdown-item" href="/user/create-profile">Manage Profile</a>
+                        <a class="dropdown-item" href="/user/logout">Logout</a>
+                    </div>
+                    <% } %> 
+
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="category.html" data-toggle="dropdown"
+                        aria-haspopup="true" aria-expanded="false">CATEGORIES</a>
+                    <div class="dropdown-menu" aria-labelledby="dropdown05">
+                        <a class="dropdown-item" href="category.html">Lifestyle</a>
+                        <a class="dropdown-item" href="category.html">Food</a>
+                        <a class="dropdown-item" href="category.html">Adventure</a>
+                        <a class="dropdown-item" href="category.html">Travel</a>
+                        <a class="dropdown-item" href="category.html">Business</a>
+                    </div>
+
+                </li>
+                <li class="nav-item">
+                    <a href="blog.html" class="nav-link">ABOUT US</a>
+                </li>
+                <li class="nav-item">
+                    <a href="contact.html" class="nav-link">CONTACT</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+<hr>

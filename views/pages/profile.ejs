@@ -1,0 +1,66 @@
+<%- include('../partials/user/header.ejs')  %> 
+<%- include('../partials/user/navigation.ejs')  %> 
+
+<div class="display-4 text-center">
+    Profile
+</div>
+
+<div class="parallax-image"></div>
+<!-- Center image -->
+<div class="profile-section text-center">
+    <div class="d-flex justify-content-center">
+        <img src="<%=profile.profileImage %> " alt="" class="img-fluid mb-3">
+
+    </div class="profile-details">
+    <h3><%=profile.name %></h3>
+    <p class="title"><%=profile.title%> </p>
+    <div class="social-links">
+        <a href="#"><i class="fab fa-facebook-f mr-2"></i></a>
+        <a href="#"><i class="fab fa-twitter mr-2"></i></a>
+        <a href="#"><i class="fab fa-instagram mr-2"></i></a>
+    </div>
+    <div class="bio-section text-center">
+        <div class="display-4">Bio</div>
+        <p class="text-muted"><%=profile.bio  %> </p>
+    </div>
+    <hr>
+
+</div>
+<div class="grow">
+   <% if(posts.length===0){  %> 
+       <h3 class="text-center py-3">No post by this user</h3>
+    <% } else {%>  
+    <h3 class="text-center">All posts</h3>
+    <div class="container">
+        <div class="row ">
+            <% posts.forEach(p =>{%> 
+            <div class="col-md-4 col-sm-12 postt">
+           
+                <a href="<%=`/dashboard/post/${p._id}`%>" class="ty-compact-list ">
+                    <div class="card p-post-card mb-3">
+                        <img class="card-img-top" src="<%=p.thumbnail%> " alt="Card image cap">
+                        <div class="card-body">
+                            <h4 class="card-title"><%=p.title %> </h4>
+                            <div class="d-flex author-post text-muted">
+                                <span><img src="<%=profile.profileImage %> " alt="" class="mr-2"></span>
+                                 <p> <strong class="mr-1">Date:</strong>   <%= moment(p.createdAt).format("MMMM Do YYYY")  %> </p>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+            </div>
+
+            <%  } ) %> 
+
+        </div>
+        <div class="row py-3">
+            <button class="btn btn-primary show-more m-auto">Show more</button>
+        </div>
+    </div>
+    <% } %> 
+</div>
+<%- include('../partials/user/footer.ejs')  %> 
+
+</body>
+
+</html>

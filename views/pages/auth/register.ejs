@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <!-- jQuery  -->
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"
+        integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.9.0/css/all.css"
+        integrity="sha384-i1LQnF23gykqWXg6jxC2ZbCbUMxyw5gLZY6UiUS98LYV5unm8GWmfkIS6jqJfb4E" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous">
+        </script>
+    <link rel="stylesheet" href="css/style.css">
+    <title>Register</title>
+</head>
+
+<body>
+
+
+
+
+    <div class="row justify-content-center">
+
+        <div class="card register-card">
+            <h3 class="text-center mt-2">Register</h3>
+            <div class="card-body">
+                <%- include('../../partials/messages') %>
+                <form class="form-horizontal" method="POST">
+                    <!-- <div class="form-group">
+                        <div class="cols-sm-10">
+                            <div class="input-group">
+                                <div class="input-group mb-2">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text"><i class="fa fa-user fa"
+                                                aria-hidden="true"></i></span>
+                                    </div>
+                                    <input class="form-control" name="name" type="text" placeholder="Enter Your Name" value="<%= typeof name != 'undefined' ? name : '' %>">
+                                </div>
+                            </div>
+                        </div>
+                    </div> -->
+                    <div class="form-group">
+                        <div class="cols-sm-10">
+                            <div class="input-group">
+                                <!-- <span class="input-group-addon"><i class="fa fa-envelope fa mr-2" aria-hidden="true"></i></span> -->
+                                <div class="input-group mb-2">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text"><i class="fa fa-envelope fa"
+                                                aria-hidden="true"></i></span>
+                                    </div>
+                                    <input class="form-control"  name="email" type="email" placeholder="Enter Your Email" value="<%= typeof email != 'undefined' ? email : '' %>">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="cols-sm-10">
+                            <div class="input-group">
+                                <!-- <span class="input-group-addon"><i class="fa fa-users fa mr-2" aria-hidden="true"></i></span> -->
+                                <div class="input-group mb-2">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text"><i class="fa fa-users fa "
+                                                aria-hidden="true"></i></span>
+                                    </div>
+                                    <input class="form-control" name="username" type="text"
+                                        placeholder="Enter Your Username" value="<%= typeof username != 'undefined' ? username : '' %>">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="cols-sm-10">
+                            <div class="input-group">
+                                <!-- <span class="input-group-addon"><i class="fa fa-lock fa-lg mr-2" aria-hidden="true"></i></span> -->
+                                <div class="input-group mb-2">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text"><i class="fa fa-lock fa-lg"
+                                                aria-hidden="true"></i></span>
+                                    </div>
+                                    <input class="form-control" name="password" type="password"
+                                        placeholder="Enter Your Password" value="<%= typeof password != 'undefined' ? password : '' %>">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+
+                        <div class="cols-sm-10">
+                            <div class="input-group">
+                                <!-- <span class="input-group-addon"><i class="fa fa-lock fa-lg mr-2" aria-hidden="true"></i></span> -->
+                                <div class="input-group mb-2">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text"><i class="fa fa-lock fa-lg"
+                                                aria-hidden="true"></i></span>
+                                    </div>
+                                    <input class="form-control" name="password2" type="password"
+                                        placeholder="Confirm Your Password" value="<%= typeof password2!='undefined' ? password2 : '' %>">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group ">
+                        <!-- <button type="button" class="btn btn-primary btn-lg btn-block login-button">Register</button> -->
+                        <input type="submit" value="Register" class="btn btn-primary btn-lg btn-block">
+
+                    </div>
+                    <div class="login-register">
+                       <p class="text-center">Already have an account?<a href="./login">Login</a></p>
+                    </div>
+                    <a class="google-btn btn btn-danger" href="/auth/google">Google</a>
+                </form>
+            </div>
+
+        </div>
+    </div>
+    </div>
+
+
+
+
+
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous">
+        </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous">
+        </script>
+</body>
+
+</html>
