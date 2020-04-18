@@ -1,6 +1,6 @@
 const Post = require('../models/Post')
 const Comment = require('../models/Comment')
-
+const moment = require('moment')
 
 exports.commentPostController = async(req,res)=>{
     let {postId} = req.params
@@ -58,18 +58,24 @@ exports.replayCommentPostController =async (req,res)=>{
             user:req.user._id,
     
         }
-       let cmt= await Comment.findOneAndUpdate(
+       await Comment.findOneAndUpdate(
             { _id: commentId },
             { $push: { 'replies': replay } }
         )
-        console.log(cmt);
         // console.log(replay);
+        // let replayJSON = await Comment.findOne({_id:commentId}).populate({
+        //         path:'replies.user',
+        //         select:'username profileImage'
+        // })
+        // console.log(replayJSON.replies);
 
+        
             
             
        return res.status(201).json({
         ...replay,
-        profileImage: req.user.profileImage
+        profileImage: req.user.profileImage,
+        username:req.user.username
         })
 
 

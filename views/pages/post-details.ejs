@@ -72,7 +72,7 @@
                                                         <img src="<%= reply.user.profileImage %>" class="align-self-start mr-3 rounded-circle" style="width: 40px;">
                                                         <div class="media-body">
                                                             <h6 class="mt-0"><%=reply.user.username  %> </h6>
-                                                           
+                                                            <h6 class="text-muted mb-2 date"> <%= moment(reply.createdAt).format("MMM Do YY"); %> </h6>
                                                             <p><%= reply.body %></p>
                                                         </div>
                                                     </div>
@@ -98,7 +98,8 @@
             </div>
         </div>
     </div>
-    
+    <!-- Moment JS CDN -->
+   <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
     <%- include('../partials/user/footer.ejs')  %>
 
     

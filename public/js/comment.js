@@ -67,6 +67,7 @@ window.onload = function () {
             .then((data) => {
               console.log(data);
 
+
               let replyElement = createReplyElement(data);
               let parent = e.target.parentElement;
               parent.previousElementSibling.appendChild(replyElement);
@@ -82,6 +83,56 @@ window.onload = function () {
       }
     }
   });
+
+
+  // Like dislike
+  const likeBtn  =  document.getElementById('likeBtn')
+  const dislikeBtn  =  document.getElementById('dislikeBtn')
+   likeBtn.addEventListener('click',function(e){
+       let postId = likeBtn.dataset.post
+       // res.json convert it into json fetch api rule
+       reqLikeDislike('likes',postId).then(res=>res.json()).then(data=>{
+           let likeText = data.liked ? 'Liked' : 'Like'
+           likeText = likeText + ` ( ${data.totalLikes} )`
+           let disLikeText = ` Dislike ( ${data.totalDisLikes} ) `
+           likeBtn.innerHTML = likeText
+           dislikeBtn.innerHTML = disLikeText
+
+       }).catch(e=>{
+           console.log(e);
+           alert(e.response.data.error)
+           
+       })
+   })
+   dislikeBtn.addEventListener('click',function(e){
+       let postId = likeBtn.dataset.post
+       // res.json convert it into json fetch api rule
+       reqLikeDislike('dislikes',postId).then(res=>res.json()).then(data=>{
+           let disLikeText = data.liked ? 'Disliked' : 'Dislike'
+           disLikeText = disLikeText + ` ( ${data.totalDisLikes} )`
+           let likeText = ` Like ( ${data.totalLikes} ) `
+           likeBtn.innerHTML = likeText
+           dislikeBtn.innerHTML = disLikeText
+
+       }).catch(e=>{
+           console.log(e);
+           alert(e.response.data.error)
+           
+       })
+   })
+
+   function reqLikeDislike (type ,postId){
+       let headers = new Headers()
+       headers.append('Accept','Application/JSON')
+       headers.append('Content-Type','Application/JSON')
+       let req = new Request(`/user/${type}/${postId}`,{
+           method:'GET',
+           headers,
+           mode:'cors'
+       })
+
+       return fetch(req)
+   }
 };
 
 function generateRequest(url, method, body) {
@@ -101,12 +152,16 @@ function generateRequest(url, method, body) {
 }
 
 function createComment(comment) {
+  // var d = new Date("JANUARY, 25, 2015");
+  // const moment = require('moment')
+  var date = moment().format("MMM Do YY")
   let innerHTML = `
     <img
         src="${comment.user.profileImage}" 
         class="rounded-circle mx-3 my-3" style="width:40px;">
         <div class="media-body my-3">
         <h5 class="m-0">${comment.user.username} </h5>
+        <h6 class="text-muted mb-2 date"> ${date} </h6>
         <p>${comment.body}</p>
         
         
@@ -128,7 +183,9 @@ function createReplyElement(reply) {
           src="${reply.profileImage}" 
           class="align-self-start mr-3 rounded-circle">
       <div class="media-body">
+      <h6 class="mt-0"> ${reply.username}</h6>
           <p>${reply.body}</p>
+
       </div>
   `;
 
