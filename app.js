@@ -57,6 +57,11 @@ app.use(bodyParser.urlencoded({ extended: true }))
 app.use('/',userRoute)
 app.use('/admin',adminRoute)
 
+// 404 page
+app.get('*', (req, res) => {
+    res.status(404).render('pages/error/404',{user:req.user});
+});// (*)This is a special character which matches anything. This can be used to create a route handler that matches all requests.
+
 const PORT = process.env.PORT|| 5000
 
 
