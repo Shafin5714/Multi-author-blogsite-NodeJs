@@ -43,6 +43,17 @@ const postSchema = new Schema({
     
 },{timestamps:true})
 
+postSchema.index({
+    title:'text',
+    body:'text',
+    tags:'text'
+},{
+    weights:{
+    title:5,
+    tags:5,
+    body:2
+}})/// search result will appear by using title , body ,tags
+
 
 const Post = mongoose.model('post',postSchema)
 module.exports = Post

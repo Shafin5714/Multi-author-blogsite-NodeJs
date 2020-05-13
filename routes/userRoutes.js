@@ -15,7 +15,8 @@ const likesDislikeController = require('../controllers/likedislikeController')
 const bookmarkController = require('../controllers/bookmarkController')
 // validator
 const postValidator = require('../validator/postValidator')
-
+// Search Controller
+const searchController = require('../controllers/searchController')
 
 
 
@@ -139,6 +140,9 @@ router.route('/user/dislikes/:postId').get(isUserAuthenticated,likesDislikeContr
 // Bookmarks
 router.route('/user/bookmark/:postId').get(isUserAuthenticated,bookmarkController.bookmarksGetController)
 
+// Search route
+
+router.route('/search').get(searchController.getSearchResult)
 
 
 
