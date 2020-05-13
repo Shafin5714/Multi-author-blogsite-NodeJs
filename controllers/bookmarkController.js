@@ -31,3 +31,20 @@ exports.bookmarksGetController = async (req,res)=>{
         
     }
 }
+
+exports.getAllBookmarksByUser = async(req,res)=>{
+
+    try {
+        let profile = await Profile.findOne({user:req.user._id}).populate({path:'bookmarks',select:'title thumbnail'})
+        console.log(profile);
+        
+        res.render('pages/bookmarks',{user:req.user,posts:profile.bookmarks})
+
+
+        
+    } catch (error) {
+        console.log(error);
+        
+    }
+
+}

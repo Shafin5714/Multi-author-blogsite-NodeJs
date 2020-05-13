@@ -140,8 +140,11 @@ router.route('/user/dislikes/:postId').get(isUserAuthenticated,likesDislikeContr
 // Bookmarks
 router.route('/user/bookmark/:postId').get(isUserAuthenticated,bookmarkController.bookmarksGetController)
 
-// Search route
+// All Bookmarks
+router.route('/bookmarks').get(isUserAuthenticated, bookmarkController.getAllBookmarksByUser)
 
+
+// Search route
 router.route('/search').get(searchController.getSearchResult)
 
 
