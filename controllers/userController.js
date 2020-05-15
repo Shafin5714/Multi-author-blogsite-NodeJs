@@ -600,3 +600,34 @@ exports.getUserPostsController = async(req,res)=>{
      
  }
 }
+
+// Change Password
+exports.changePasswordGetController = (req,res)=>{
+    res.render('pages/auth/changePassword',{user:req.user})
+}
+exports.changePasswordPostController = async (req,res)=>{
+
+    let {oldPassword,newPassword,confirmPassword} = req.body
+    if(newPassword!=confirmPassword){
+        req.flash('error_msg','Password does not match')
+        return res.redirect('/changePassword')
+    }
+    try{
+        let matched = await bcrypt.compare(oldPassword,req.user.password)
+        if(!matched){
+         req.flash('error_msg','Invalid Old password')
+        return res.redirect('/changePassword')
+        }
+        let hash = await bcrypt.hash(newPassword , 11)
+        await User.findOneAndUpdate({_id:req.user._id},{$set:{password:hash}})
+        req.flash('success_msg','Password Updated Successfully')
+        return res.redirect('/changePassword')
+    }catch(e){
+        console.log(e);
+        
+    }
+   
+
+
+
+}

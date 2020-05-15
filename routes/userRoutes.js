@@ -54,6 +54,9 @@ router.get('/user/logout',(req,res)=>{
     res.redirect('/login')
 })
 
+// Change Password
+router.route('/changePassword').get(isUserAuthenticated ,userController.changePasswordGetController).post(isUserAuthenticated, userController.changePasswordPostController)
+
 // auth with google
 router.get('/auth/google',passport.authenticate('google',{
     // scope =what to retrieve form users profile
