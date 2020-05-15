@@ -205,7 +205,7 @@ exports.userCreateProfilePostController = async(req,res)=>{
 exports.userViewProfileController = async(req,res)=>{
     let profileId = req.params.profileId
     let profile =await Profile.findOne({_id:profileId}).populate('posts')
-    console.log(profile);
+    // console.log(profile);
     
      if(profile){
         res.render('pages/profile',{user:req.user,profile:profile,posts:profile.posts,moment})

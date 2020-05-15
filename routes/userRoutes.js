@@ -143,6 +143,8 @@ router.route('/user/bookmark/:postId').get(isUserAuthenticated,bookmarkControlle
 // All Bookmarks
 router.route('/bookmarks').get(isUserAuthenticated, bookmarkController.getAllBookmarksByUser)
 
+// All comments
+router.route('/comments').get(isUserAuthenticated,commentController.getAllUserComments)
 
 // Search route
 router.route('/search').get(searchController.getSearchResult)

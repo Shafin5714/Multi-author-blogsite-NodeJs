@@ -1,5 +1,6 @@
 const Post = require('../models/Post')
 const Comment = require('../models/Comment')
+const Profile = require('../models/Profile')
 const moment = require('moment')
 
 exports.commentPostController = async(req,res)=>{
@@ -84,5 +85,34 @@ exports.replayCommentPostController =async (req,res)=>{
         return res.status(500).json({
             error: 'Server Error Occurred'
         })
+    }
+}
+
+
+// Get all user comments
+
+exports.getAllUserComments = async(req,res)=>{
+    try{
+    let profile = await Profile.findOne({user:req.user._id})
+    // when u have to work with lot of id (any of the id of the comment  )
+    let comments = await Comment.find({post:{$in:profile.posts}}).populate({
+        path:'post',
+        select:'title'
+    }).populate({
+        path:'user',
+        select:'username profileImage',
+        populate:{  /// deep populate
+            path:'profile',
+            select:'_id'
+        }
+    }).populate({
+        path:'replies.user',
+        select:'username profileImage'
+    })
+    // res.json(comments)
+    res.render('pages/comments',{user:req.user,comments,moment})
+    }catch(e){
+        console.log(e);
+        
     }
 }
