@@ -5,4 +5,6 @@ module.exports ={
         clientID:'855073555666-jovta6n7me88qf4a3d0pvvovuu0m29st.apps.googleusercontent.com',
         clientSecret:'ovwf5rxBWIBEZvlNdjb1mKaY'
     },
+    email:"aspect5714@gmail.com",
+    pass:"Shafin5714"
 }
