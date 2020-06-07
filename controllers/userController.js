@@ -13,7 +13,7 @@ const url = require('url')
 const QRCode = require('qrcode')
 const nodemailer = require('nodemailer');
 require('dotenv').config()
-const {email,pass} =  require('../config/keys')
+// const {email,pass} =  require('../config/keys')
 
 
 

@@ -2,7 +2,7 @@ var passport = require('passport')
   , LocalStrategy = require('passport-local').Strategy;
 const bcrypt = require('bcryptjs')
 const GoogleStrategy = require('passport-google-oauth20')
-const keys = require('./keys')
+// const keys = require('./keys')
 require('dotenv').config()
 const User = require("../models/User");
 // passport parameter will be passed in form app.js
