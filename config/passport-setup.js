@@ -3,7 +3,7 @@ var passport = require('passport')
 const bcrypt = require('bcryptjs')
 const GoogleStrategy = require('passport-google-oauth20')
 const keys = require('./keys')
-
+require('dotenv').config()
 const User = require("../models/User");
 // passport parameter will be passed in form app.js
 module.exports = function(passport) {
@@ -38,8 +38,8 @@ module.exports = function(passport) {
     new GoogleStrategy({
     // options for google start
     callbackURL:'/auth/google/redirect',
-    clientID:keys.google.clientID,
-    clientSecret:keys.google.clientSecret
+    clientID:process.env.CLIENT_ID,
+    clientSecret:process.env.CLIENT_SECRET
 
 },(accessToken,refreshToken,profile,done)=>{
     //passport callback function

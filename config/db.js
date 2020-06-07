@@ -1,10 +1,13 @@
 const mongoose = require('mongoose')
 const { MongoUri,Offline} = require('./keys')
+require('dotenv').config()
 
+let mongoUri = process.env.MONGO_URI
+// console.log(mongoUri);
 
 const connectDB = async() =>{
     try {
-       await mongoose.connect(Offline,{
+       await mongoose.connect(mongoUri,{
            useNewUrlParser: true,
            useUnifiedTopology: true,
            useCreateIndex:true,

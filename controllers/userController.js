@@ -12,6 +12,7 @@ const moment = require('moment')
 const url = require('url')
 const QRCode = require('qrcode')
 const nodemailer = require('nodemailer');
+require('dotenv').config()
 const {email,pass} =  require('../config/keys')
 
 
@@ -662,8 +663,8 @@ exports.contactMePostController = (req,res)=>{
         service: 'gmail',
         requireTLS: true,
         auth: {
-          user: email,
-          pass: pass
+          user: process.env.EMAIL,
+          pass:  process.env.PASSWORD
         }
         
      });
