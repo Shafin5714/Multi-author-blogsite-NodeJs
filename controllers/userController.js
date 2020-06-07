@@ -372,7 +372,7 @@ exports.uploadProfilePics =async (req,res)=>{
                     user:req.user._id
                 },{$set:{profileImage}})
             }
-            console.log(profile);
+            // console.log(profile);
             
             await User.findOneAndUpdate({_id:req.user.id},
                {$set:{profileImage}} )
@@ -443,7 +443,7 @@ exports.userCreatePostPostController = async(req,res)=>{
     
     let errors = validationResult(req)
      let {title, body, tags,category} = req.body
-     console.log(req.body);
+    //  console.log(req.body);
      
     //  console.log(title);
     //     console.log(req.body);

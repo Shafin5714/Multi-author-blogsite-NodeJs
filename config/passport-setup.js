@@ -46,8 +46,8 @@ module.exports = function(passport) {
     // console.log(accessToken);
     // console.log(refreshToken);
     
-    console.log(profile);
-    console.log(profile.emails[0].value);
+    // console.log(profile);
+    // console.log(profile.emails[0].value);
     
     // console.log(profile.photos[0].value);
     
