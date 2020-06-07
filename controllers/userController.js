@@ -11,7 +11,8 @@ const readingTime = require('reading-time')
 const moment = require('moment')
 const url = require('url')
 const QRCode = require('qrcode')
-
+const nodemailer = require('nodemailer');
+const {email,pass} =  require('../config/keys')
 
 
 
@@ -629,5 +630,61 @@ exports.changePasswordPostController = async (req,res)=>{
    
 
 
+
+}
+
+exports.contactMeController = (req,res)=>{
+    res.render('pages/contact',{user:req.user})
+}
+
+
+
+exports.contactMePostController = (req,res)=>{
+    
+    const output = `
+        <p>You have a new contact request form ${req.body.name}</p>
+        <h3>Contact Details</h3>
+        <ul>
+        <li>Name: ${req.body.name}</li>
+        <li>Email: ${req.body.email}</li>
+        </ul>
+        <h3>Message</h3>
+        <p>${req.body.text}</p>
+       
+    `
+    // console.log(email);
+    // console.log(pass);
+ 
+    let transporter = nodemailer.createTransport({
+        host: "smtp.ethereal.email",
+        port: 5000,
+        secure: false,
+        service: 'gmail',
+        requireTLS: true,
+        auth: {
+          user: email,
+          pass: pass
+        }
+        
+     });
+      
+      let mailOptions = {
+        from: req.body.email,
+        to: 'Shafin5714@outlook.com',
+        subject: 'Contact Request',
+        // text:"hello world",
+        html:output
+      };
+      
+      transporter.sendMail(mailOptions, function(error, info){
+        if (error) {
+          console.log(error);
+        } else {
+          console.log('Email sent: ' + info.response);
+          req.flash('success_msg','Email Sent')
+          res.redirect('/contact')
+        
+        }
+      }); 
 
 }

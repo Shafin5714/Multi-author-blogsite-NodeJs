@@ -1,0 +1,41 @@
+<%- include('../partials/user/header.ejs')  %> 
+<%- include('../partials/user/navigation.ejs')  %> 
+
+
+
+
+<div class="container">
+    <div class="py-3">
+        <div class="row">
+            <div class="col-md-8">
+                <%- include('../partials/messages') %>
+                <h1 class="my-3">Contact Me</h1>
+                <form action="/contact" method="POST">
+                    <div class="fom-group">
+                        <label for="name" class="my-2">Name</label>
+                        <input type="text" class="form-control" id="name" name="name">
+                        <label for="email" class="my-2">Email</label>
+                        <input type="email" class="form-control" id="email" name="email">
+                        <label for="message" class="my-2">Write Message</label>
+                        <textarea name="text" id="message" cols="30" rows="10" class="form-control"></textarea>
+                        <input type="submit" value="Send Message" class="btn btn-primary my-3">
+                    </div>
+                </form>
+            </div>
+            <div class="col-md-4">
+
+            </div>
+        </div>
+        
+    </div>
+</div>
+
+
+
+
+
+
+
+<%- include('../partials/user/footer.ejs')  %> 
+
+</body>

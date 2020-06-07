@@ -153,7 +153,8 @@ router.route('/comments').get(isUserAuthenticated,commentController.getAllUserCo
 router.route('/search').get(searchController.getSearchResult)
 
 
-
+// Contact Me
+router.route('/contact').get(userController.contactMeController).post(userController.contactMePostController)
 
 router.get('/',(req,res)=>{
     res.redirect('/dashboard')
