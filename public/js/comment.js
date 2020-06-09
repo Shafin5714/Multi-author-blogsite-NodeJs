@@ -2,6 +2,7 @@
 window.onload = function () {
   const comment = document.getElementById("comment");
   const commentHolder = document.getElementById("comment-holder");
+  
 
   comment.addEventListener("keypress", function (e) {
     if (e.key === "Enter") {
@@ -25,7 +26,15 @@ window.onload = function () {
         })
           .then((res) => res.json())
           .then((data) => {
-            console.log(data);
+            // console.log(data);
+            
+            // console.log(v);
+            let v = document.querySelector("#cc"); 
+            if(v){
+              v.className = "hide"; 
+            }
+           
+
             let commentElement = createComment(data);
             commentHolder.insertBefore(
               commentElement,
@@ -65,9 +74,8 @@ window.onload = function () {
           })
             .then(res => res.json())
             .then((data) => {
-              console.log(data);
-
-
+              // console.log(data);
+             
               let replyElement = createReplyElement(data);
               let parent = e.target.parentElement;
               parent.previousElementSibling.appendChild(replyElement);

@@ -6,7 +6,7 @@
         <div class="row">
             <div class="col-md-8">
                 <div class="main-content">
-                    <img src="<%=post.thumbnail  %> " alt="" width="700px" height="400px" class="mb-3">
+                    <img src="<%=post.thumbnail  %> " alt="" width="700px" height="400px" class="mb-3 img-fluid">
                     <span class="author mr-2">
                         <img src="<%=post.author.profileImage %> "class="mr-2 p-ico"> <a href="<%=`/user/profile/${post.author.profile._id}` %>"><%=post.author.username%> </a> </span>&bullet;
                     <!-- Date -->
@@ -16,7 +16,7 @@
                     <a href="#" title="Love it" class="btnl btn-counter ml-2" data-count="0"><span>&#x2764;</span>Love
                         it</a>
                     <!-- Post Title -->
-                    <h1 class="mb-2"><%=post.title%> </h1>
+                    <h1 class="mb-2 w-100"><%=post.title%> </h1>
                     <div class="tags">
                         <% post.tags.forEach(tag => { %>
                             <a class="category mb-5" href="#"><%=tag%></a>
@@ -26,7 +26,7 @@
 
                     <div class="content-body">
                         <!-- output html value  -->
-                        <%-post.body  %> 
+                        <%-post.body %> 
                     </div>
                 </div>
 
@@ -34,7 +34,7 @@
                     <p class="lead">QR code for this post</p>
                   <img src=" <%=data %> " alt="" class="img-fluid"> 
                 </div>
-                <section class="ml-2">
+                <section class="ml-2 my-3">
                     <% if(!user){ %> 
                         <button class="btn btn-success btn-sm disabled" >
                             Like <%=post.likes.length%> 
@@ -56,10 +56,10 @@
                     </div>
                     <div class="mt-5" id="comment-holder">
                         <% if (post.comments.length === 0) { %>
-                            <p class="text-muted text-center">There is No Comment</p>
+                            <p id="cc" class="text-muted text-center">There is No Comment</p>
                         <% } else { %>
                             <% for (let comment of post.comments.reverse()) { %>
-                                <div class="media border">
+                                <div class="media border w-100">
                                     <img src="<%= comment.user.profileImage %>" class="rounded-circle mx-3 my-3" style="width: 40px;">
                                     <div class="media-body my-3">
                                         <h5 class="m-0"><%=comment.user.username  %> </h5>
@@ -79,8 +79,8 @@
                                                 <% } %>
                                             <% } %>
                                         </div>
-                                        <div class="my-3">
-                                            <input type="text" class="form-control" placeholder="Press Enter to Reply" name="reply" data-comment="<%= comment._id %>">
+                                        <div class="my-2">
+                                            <input type="text" class="form-control w-75" placeholder="Press Enter to Reply" name="reply" data-comment="<%= comment._id %>">
                                         </div>
                                     </div>
                                 </div>

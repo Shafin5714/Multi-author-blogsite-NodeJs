@@ -19,7 +19,10 @@ const profileSchema =new Schema({
         trim:true,
         maxlength:500
     },
-    profileImage:String,
+    profileImage:{
+        type:String,
+        default: '/uploads/default.png'
+    },
     socialLinks:{
         website:String,
         facebook:String,

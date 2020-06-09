@@ -490,3 +490,7 @@ footer{
 .date{
   font-size: 13px;
 }
+
+.hide{
+  display: none;
+}
