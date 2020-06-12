@@ -2,4 +2,3 @@ node_modules/
 config/keys.js
 .env
 package-lock.json
-public/uploads
