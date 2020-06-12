@@ -17,3 +17,4 @@ This is a web application for blogging
 * Dynamic pagination.
 * Search using tags 
 * Generate QR code for every post.
+#Live project link https://shafin5714-blog.herokuapp.com/dashboard
