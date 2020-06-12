@@ -213,7 +213,7 @@ exports.userCreateProfilePostController = async(req,res,next)=>{
         name,
         title,
         bio,
-        profileImage:req.user.profilePics,
+        profileImage:req.user.profileImage,
         socialLinks: {
             website: website || '',
             facebook: facebook || '',
