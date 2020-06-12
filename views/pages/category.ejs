@@ -1,0 +1,79 @@
+<%- include('../partials/user/header.ejs')  %> 
+<%- include('../partials/user/navigation.ejs')  %> 
+<section id="category-section">
+    <div class="container">
+        <div class="category-title py-5">
+            <h3>Category: <%=categoryName%> </h3>
+        </div>
+        <% if (category.length==0) { %>
+            <h3>There is no post on <%=categoryName%></h3>
+        <% } %>
+        <div class="row">
+            <div class="col-md-8">
+                <% category.forEach(cat => { %>
+                    <a href="dashboard/post/<%=cat._id%>">
+                        <div class="card cat-card mb-3">
+                            <div class="d-md-flex">
+                                <img src="<%=cat.thumbnail %> " alt="" height="140px" width="200px" class="mr-3">
+                                <div class="m-2">
+                                    <h3><%= cat.title %> </h3>
+                                    <div class="d-flex author-post text-muted">
+                                        <span class="img-ico"> <img src="<%=cat.author.profileImage %> " alt="" class="mr-2 "></span>
+                                        <span class="mr-2"><%=cat.author.username %> &nbsp;&bullet;</span>
+                                        <span><%= moment(cat.createdAt).format('MMMM Do YYYY') %> </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                <% }) %>
+                
+                
+               
+                <!-- Pagination -->
+                <section id="paginationID">
+                    <div class="row py-4">
+            
+                        <!-- <div class="m-auto">
+                            <nav aria-label="Page navigation example">
+                                <ul class="pagination">
+                                    <li class="page-item">
+                                        <a class="page-link" href="#!" aria-label="Previous">
+                                            <span aria-hidden="true">&laquo;</span>
+                                            <span class="sr-only">Previous</span>
+                                        </a>
+                                    </li>
+                                    <li class="page-item"><a class="page-link" href="#!">1</a></li>
+                                    <li class="page-item"><a class="page-link" href="#!">2</a></li>
+                                    <li class="page-item"><a class="page-link" href="#!">3</a></li>
+                                    <li class="page-item"><a class="page-link" href="#!">4</a></li>
+                                    <li class="page-item"><a class="page-link" href="#!">5</a></li>
+                                    <li class="page-item"><a class="page-link" href="#!">6</a></li>
+                                    <li class="page-item"><a class="page-link" href="#!">7</a></li>
+                                    <li class="page-item">
+                                        <a class="page-link" href="#!" aria-label="Next">
+                                            <span aria-hidden="true">&raquo;</span>
+                                            <span class="sr-only">Next</span>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </nav>
+                        </div> -->
+            
+                    </div>
+            
+                </section>
+                
+            </div>
+        </div>
+        <div class="col-md-4">
+
+        </div>
+    </div>
+</section>
+
+<%- include('../partials/user/footer.ejs')  %> 
+
+</body>
+
+</html>

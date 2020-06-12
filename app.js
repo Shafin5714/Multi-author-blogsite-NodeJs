@@ -1,5 +1,4 @@
 const express = require('express')
-const adminRoute = require('./routes/adminRoutes')
 const userRoute = require('./routes/userRoutes')
 const connectDB = require('./config/db')
 const flash = require('connect-flash')
@@ -55,12 +54,25 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }))
 
 app.use('/',userRoute)
-app.use('/admin',adminRoute)
 
 // 404 page
 app.get('*', (req, res) => {
     res.status(404).render('pages/error/404',{user:req.user});
 });// (*)This is a special character which matches anything. This can be used to create a route handler that matches all requests.
+
+app.use((error,req,res,next)=>{
+    res.status = error.status || 500
+    // res.json({
+    //     error:{
+    //         message:error.message
+    //     }
+    // })
+    if(error.status === 404){
+      return res.render('pages/error/404',{user:req.user});
+    }
+    res.render('pages/error/500',{user:req.user});
+
+})
 
 const PORT = process.env.PORT|| 5000
 

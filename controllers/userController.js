@@ -91,12 +91,41 @@ exports.index =async(req,res)=>{
 
     }
     
+    // Count number of category post
+    let total = await Post.aggregate([
+        {
+            $facet: {
+              authors: [
+                // Count the number of books published in a given year
+                {
+                  $group: {
+                    _id: '$category',
+                    count: { $sum: 1 }
+                  }
+                },
+                // Sort by author name ascending
+                { $sort: { count: -1, _id: 1 } }
+              ]
+            }
+          }
+       
+      ])
+    // console.log(total[0].authors);
+    let ntotal = total[0].authors
+    // console.log(ntotal);
+
+    // Popular posts
+    let popular = await Post.find().sort({likes:-1}).limit(3)
+    // console.log(popular);
     
-    res.render('pages/index',{user:req.user,post:post,moment:moment,filter,totalPage,itemPerPage,currentPage,bookmarks})
+    
+
+    res.render('pages/index',{user:req.user,post:post,moment:moment,filter,totalPage,itemPerPage,currentPage,bookmarks,ntotal,popular})
 }
 
-exports.userViewPostGetController = async(req,res)=>{
-    let {postId} = req.params 
+exports.userViewPostGetController = async(req,res,next)=>{
+    try {
+        let {postId} = req.params 
     // deep populate
     let post = await Post.findOne({_id:postId}).populate({
         path:'author',
@@ -120,9 +149,9 @@ exports.userViewPostGetController = async(req,res)=>{
         }
     })
     if(!post){
-        let error = new Error('404 page not found')
+        let error = new Error('Post not found')
         error.status = 400
-        throw error
+        return next(error)
     }
     let bookmarks = []
     if(req.user){
@@ -150,25 +179,33 @@ exports.userViewPostGetController = async(req,res)=>{
     // if(post){
     //     res.render('pages/post-details',{user:req.user,post,moment,data:url})
     // }
-
-
+    
+   
+    } catch (error) {
+       next(error)
+    }
    
 }
 
 
 
 // Creat Profile
-exports.userCreateProfileGetController = async(req,res)=>{
-    let profile =await Profile.findOne({user:req.user._id})
-    if(profile){
-        return res.redirect('/user/edit-profile')
-    }else{
-        res.render('pages/create-profile',{user:req.user})
+exports.userCreateProfileGetController = async(req,res,next)=>{
+    try {
+        let profile =await Profile.findOne({user:req.user._id})
+        if(profile){
+            return res.redirect('/user/edit-profile')
+        }else{
+            res.render('pages/create-profile',{user:req.user})
+        }
+    } catch (error) {
+       next(error);
     }
+   
 }
 
 
-exports.userCreateProfilePostController = async(req,res)=>{
+exports.userCreateProfilePostController = async(req,res,next)=>{
     let {name,title,bio,website,facebook,twitter,github} = req.body
     try{
     let profile = new Profile({
@@ -195,8 +232,8 @@ exports.userCreateProfilePostController = async(req,res)=>{
         }
     })
    return res.redirect('/')
-    }catch(e){
-        console.log(e);
+    }catch(error){
+        next(error)
         
     }
 
@@ -204,7 +241,8 @@ exports.userCreateProfilePostController = async(req,res)=>{
 
 
 // View Profile
-exports.userViewProfileController = async(req,res)=>{
+exports.userViewProfileController = async(req,res,next)=>{
+    try {
     let profileId = req.params.profileId
     let profile =await Profile.findOne({_id:profileId}).populate('posts')
     // console.log(profile);
@@ -212,6 +250,11 @@ exports.userViewProfileController = async(req,res)=>{
      if(profile){
         res.render('pages/profile',{user:req.user,profile:profile,posts:profile.posts,moment})
      }
+    } catch (error) {
+        next(error);
+        
+    }
+    
 }
 
 
@@ -219,7 +262,7 @@ exports.userViewProfileController = async(req,res)=>{
 
 
 // Edit Profile
-exports.userEditProfileGetController=async(req,res)=>{
+exports.userEditProfileGetController=async(req,res,next)=>{
     try {
         let profile = await Profile.findOne({
             user: req.user._id
@@ -230,14 +273,11 @@ exports.userEditProfileGetController=async(req,res)=>{
 
         res.render('pages/edit-profile', {user:req.user, profile})
 
-    } catch (e) {
-        console.log(e);
+    } catch (error) {
+        next(error);
     }
 }
-exports.userEditProfilePostController=async(req,res)=>{
-  
-    // console.log(profile);
-    
+exports.userEditProfilePostController=async(req,res,next)=>{
    
         const { name,title,bio, website,facebook,twitter,github} = req.body
         let profile = {
@@ -259,8 +299,8 @@ exports.userEditProfilePostController=async(req,res)=>{
                 res.render('pages/edit-profile', {
                     profile: updatedProfile,user:req.user
                 })
-        }catch(e){
-            console.log(e);
+        }catch(error){
+            next(error);
             
         }
        
@@ -279,7 +319,7 @@ exports.userLoginGetController = (req,res)=>{
 exports.userRegisterGetController = (req,res)=>{
     res.render('pages/auth/register')
 }
-exports.userRegisterPostController = async(req,res)=>{
+exports.userRegisterPostController = async(req,res,next)=>{
     // console.log(req.body);
     const {username, email,password,password2} = req.body
     let errors= []
@@ -349,8 +389,8 @@ exports.userRegisterPostController = async(req,res)=>{
                  res.redirect('/login')
                 
             }
-        }catch(e){
-            console.log(e);
+        }catch(error){
+            next(error)
             
         }
         
@@ -439,7 +479,7 @@ exports.userCreatePostGetController=(req,res)=>{
 
     res.render('pages/create-post',{user:req.user,error:{}})
 }
-exports.userCreatePostPostController = async(req,res)=>{
+exports.userCreatePostPostController = async(req,res,next)=>{
     
     let errors = validationResult(req)
      let {title, body, tags,category} = req.body
@@ -488,8 +528,8 @@ exports.userCreatePostPostController = async(req,res)=>{
            {$push:{'posts':createdPost._id}}
            )
         return res.redirect(`/user/posts/edit/${createdPost._id}`)
-       }catch(e){
-           console.log(e);
+       }catch(error){
+            next(error);
            
        }
 
@@ -688,4 +728,26 @@ exports.contactMePostController = (req,res)=>{
         }
       }); 
 
+}
+
+exports.categoryGetController  = async(req,res,next) =>{
+    try{
+        let categoryName = req.query.name        
+        let category =await Post.find({category:categoryName}).populate({
+            path:'author',
+            select:'username profileImage'
+        })
+        // console.log(category);
+        res.render("pages/category",{user:req.user, categoryName,category,moment})
+    }catch(error){
+        next(error)
+        
+    }
+ 
+
+   
+}
+
+exports.aboutMeGetController = (req,res) =>{
+    res.render('pages/about',{user:req.user})
 }

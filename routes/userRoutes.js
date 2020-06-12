@@ -156,6 +156,12 @@ router.route('/search').get(searchController.getSearchResult)
 // Contact Me
 router.route('/contact').get(userController.contactMeController).post(userController.contactMePostController)
 
+// Category Route
+router.route('/category/').get(userController.categoryGetController)
+
+// About Us
+router.route('/about').get(userController.aboutMeGetController)
+
 router.get('/',(req,res)=>{
     res.redirect('/dashboard')
 })

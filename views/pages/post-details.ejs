@@ -4,98 +4,95 @@
 <section class="blog-main">
     <div class="container">
         <div class="row">
-            <div class="col-md-8">
-                <div class="main-content">
-                    <img src="<%=post.thumbnail  %> " alt="" width="700px" height="400px" class="mb-3 img-fluid">
-                    <span class="author mr-2">
-                        <img src="<%=post.author.profileImage %> "class="mr-2 p-ico"> <a href="<%=`/user/profile/${post.author.profile._id}` %>"><%=post.author.username%> </a> </span>&bullet;
-                    <!-- Date -->
-                    <span class="mr-2"> <%= moment(post.createdAt).format("MMMM Do YYYY")  %> </span> &bullet;
-                    <span class="ml-2"><span class="fa fa-comments"></span> 3</span>
-                    <!-- love button -->
-                    <a href="#" title="Love it" class="btnl btn-counter ml-2" data-count="0"><span>&#x2764;</span>Love
-                        it</a>
-                    <!-- Post Title -->
-                    <h1 class="mb-2 w-100"><%=post.title%> </h1>
-                    <div class="tags">
-                        <% post.tags.forEach(tag => { %>
-                            <a class="category mb-5" href="#"><%=tag%></a>
-                        <% }) %> 
-                     
+            <% if (post) { %>
+                <div class="col-md-8">
+                    <div class="main-content">
+                        <img src="<%=post.thumbnail  %> " alt="" width="700px" height="400px" class="mb-3 img-fluid">
+                        <span class="author mr-2">
+                            <img src="<%=post.author.profileImage %> "class="mr-2 p-ico"> <a href="<%=`/user/profile/${post.author.profile._id}` %>"><%=post.author.username%> </a> </span>&bullet;
+                        <!-- Date -->
+                        <span class="mr-2"> <%= moment(post.createdAt).format("MMMM Do YYYY")  %> </span> &bullet;
+                        <span class="ml-2"><span class="fa fa-comments"></span> 3</span>
+                        <!-- love button -->
+                        <a href="#" title="Love it" class="btnl btn-counter ml-2" data-count="0"><span>&#x2764;</span>Love
+                            it</a>
+                        <!-- Post Title -->
+                        <h1 class="mb-2 w-100"><%=post.title%> </h1>
+                        <div class="tags">
+                            <% post.tags.forEach(tag => { %>
+                                <a class="category mb-5" href="#"><%=tag%></a>
+                            <% }) %> 
+                         
+                        </div>
+    
+                        <div class="content-body">
+                            <!-- output html value  -->
+                            <%-post.body %> 
+                        </div>
                     </div>
-
-                    <div class="content-body">
-                        <!-- output html value  -->
-                        <%-post.body %> 
+    
+                    <div>
+                        <p class="lead">QR code for this post</p>
+                      <img src=" <%=data %> " alt="" class="img-fluid"> 
                     </div>
-                </div>
-
-                <div>
-                    <p class="lead">QR code for this post</p>
-                  <img src=" <%=data %> " alt="" class="img-fluid"> 
-                </div>
-                <section class="ml-2 my-3">
-                    <% if(!user){ %> 
-                        <button class="btn btn-success btn-sm disabled" >
-                            Like <%=post.likes.length%> 
+                    <section class="ml-2 my-3">
+                        <% if(!user){ %> 
+                            <button class="btn btn-success btn-sm disabled" >
+                                Like <%=post.likes.length%> 
+                            </button>
+                            <button class="btn btn-danger btn-sm disabled" >
+                                Dislike <%=post.dislikes.length%> 
+                            </button>
+                            <p class="text-center text-muted"> To like and Comment please <a href="/login">Login</a></p>
+                        <% } else { %> 
+                        <button class="btn btn-success btn-sm" id="likeBtn" data-post="<%=post._id %>">
+                            <%=post.likes.includes(user._id)  ? 'Liked' : 'Like' %> (<%=post.likes.length%>)
                         </button>
-                        <button class="btn btn-danger btn-sm disabled" >
-                            Dislike <%=post.dislikes.length%> 
+                        <button class="btn btn-danger btn-sm" id="dislikeBtn" data-post="<%=post._id %>">
+                            <%=post.dislikes.includes(user._id)  ? 'Disliked' : 'Dislike' %> (<%=post.dislikes.length%>)
                         </button>
-                        <p class="text-center text-muted"> To like and Comment please <a href="/login">Login</a></p>
-                    <% } else { %> 
-                    <button class="btn btn-success btn-sm" id="likeBtn" data-post="<%=post._id %>">
-                        <%=post.likes.includes(user._id)  ? 'Liked' : 'Like' %> (<%=post.likes.length%>)
-                    </button>
-                    <button class="btn btn-danger btn-sm" id="dislikeBtn" data-post="<%=post._id %>">
-                        <%=post.dislikes.includes(user._id)  ? 'Disliked' : 'Dislike' %> (<%=post.dislikes.length%>)
-                    </button>
-                    <div class="mt-5">
-                        <label for="comment">Leave A Comment</label>
-                        <input type="text" class="form-control" id="comment" placeholder="Press Enter to Submit" data-post="<%= post._id %>">
-                    </div>
-                    <div class="mt-5" id="comment-holder">
-                        <% if (post.comments.length === 0) { %>
-                            <p id="cc" class="text-muted text-center">There is No Comment</p>
-                        <% } else { %>
-                            <% for (let comment of post.comments.reverse()) { %>
-                                <div class="media border w-100">
-                                    <img src="<%= comment.user.profileImage %>" class="rounded-circle mx-3 my-3" style="width: 40px;">
-                                    <div class="media-body my-3">
-                                        <h5 class="m-0"><%=comment.user.username  %> </h5>
-                                        <h6 class="text-muted mb-2 date"> <%= moment(comment.createdAt).format("MMM Do YY"); %> </h6>
-                                        <p> <%= comment.body %> </p>
-                                        <div name="replies">
-                                            <% if (comment.replies.length > 0) { %>
-                                                <% for (let reply of comment.replies) { %> 
-                                                    <div class="media mt-3">
-                                                        <img src="<%= reply.user.profileImage %>" class="align-self-start mr-3 rounded-circle" style="width: 40px;">
-                                                        <div class="media-body">
-                                                            <h6 class="mt-0"><%=reply.user.username  %> </h6>
-                                                            <h6 class="text-muted mb-2 date"> <%= moment(reply.createdAt).format("MMM Do YY"); %> </h6>
-                                                            <p><%= reply.body %></p>
+                        <div class="mt-5">
+                            <label for="comment">Leave A Comment</label>
+                            <input type="text" class="form-control" id="comment" placeholder="Press Enter to Submit" data-post="<%= post._id %>">
+                        </div>
+                        <div class="mt-5" id="comment-holder">
+                            <% if (post.comments.length === 0) { %>
+                                <p id="cc" class="text-muted text-center">There is No Comment</p>
+                            <% } else { %>
+                                <% for (let comment of post.comments.reverse()) { %>
+                                    <div class="media border w-100">
+                                        <img src="<%= comment.user.profileImage %>" class="rounded-circle mx-3 my-3" style="width: 40px;">
+                                        <div class="media-body my-3">
+                                            <h5 class="m-0"><%=comment.user.username  %> </h5>
+                                            <h6 class="text-muted mb-2 date"> <%= moment(comment.createdAt).format("MMM Do YY"); %> </h6>
+                                            <p> <%= comment.body %> </p>
+                                            <div name="replies">
+                                                <% if (comment.replies.length > 0) { %>
+                                                    <% for (let reply of comment.replies) { %> 
+                                                        <div class="media mt-3">
+                                                            <img src="<%= reply.user.profileImage %>" class="align-self-start mr-3 rounded-circle" style="width: 40px;">
+                                                            <div class="media-body">
+                                                                <h6 class="mt-0"><%=reply.user.username  %> </h6>
+                                                                <h6 class="text-muted mb-2 date"> <%= moment(reply.createdAt).format("MMM Do YY"); %> </h6>
+                                                                <p><%= reply.body %></p>
+                                                            </div>
                                                         </div>
-                                                    </div>
+                                                    <% } %>
                                                 <% } %>
-                                            <% } %>
-                                        </div>
-                                        <div class="my-2">
-                                            <input type="text" class="form-control w-75" placeholder="Press Enter to Reply" name="reply" data-comment="<%= comment._id %>">
+                                            </div>
+                                            <div class="my-2">
+                                                <input type="text" class="form-control w-75" placeholder="Press Enter to Reply" name="reply" data-comment="<%= comment._id %>">
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
+                                <% } %>
                             <% } %>
-                        <% } %>
-                    </div>
+                        </div>
+                    <% } %>
+                    </section>
+             </div>
                 <% } %>
-                </section>
-
-
-
-
-
-
-            </div>
+            
         </div>
     </div>
     <!-- Moment JS CDN -->

@@ -20,7 +20,7 @@
                             <div class="card wow fadeInUp l-post-card">
                                 <img class="card-img-top img-fluid" src="<%=p.thumbnail %> " alt="Card image cap">
                                 <div class="card-body">
-                                   <a href="<%=`/dashboard/post/${p._id}`%> "> <h4 class="card-title"><%=p.title %> </h4></a>
+                                   <a href="<%=`/dashboard/post/${p._id}`%> "> <h5 class="card-title"><%=p.title %> </h5></a>
                                     <div class="d-flex author-post text-muted">
                                         <span><img class="mr-2 img-fluid" src="<%=p.author.profileImage %> " alt=""></span>
                                         <span class="mr-2"> <%=p.author.username  %>  &nbsp;&bullet;</span>
@@ -96,19 +96,18 @@
                         <div class="card-body text-center bio-card">
                             <img class="card-img-top rounded-circle" src="./img/original.jpg" alt="Card image cap">
                             <h4 class="card-title">Minhajul Abedin Shafin</h4>
-                            <h6 class="card-subtitle mb-2 text-muted">Card subtitle</h6>
+                            <h6 class="card-subtitle mb-2 text-muted">Fullstack Developer</h6>
                             <p class="card-text">
-                                Some quick example text to build on the card title
-                                and make up the bulk of the card's content.
+                                I am a Fullstack Developer specialize in Node.js , React, Express basically the MERN stack.
                             </p>
 
-                            <button class="btn btn-primary d-flex m-auto">Read my bio</button>
+                            <a href="/about"><button class="btn btn-primary d-flex m-auto">Read my bio</button></a>
 
                             <div class="social-links mt-3">
-                                <a href="#" class="mr-2"> <i class="fab fa-facebook"></i></a>
-                                <a href="#" class="mr-2"> <i class="fab fa-twitter-square"></i></i></a>
-                                <a href="#" class="mr-2"> <i class="fab fa-instagram"></i></a>
-                                <a href="#" class="mr-2"> <i class="fab fa-youtube"></i></a>
+                                <a href="https://www.facebook.com/minhajul.abedinshafin/" class="mr-2"> <i class="fab fa-facebook"></i></a>
+                                <a href="https://twitter.com/shafin5714" class="mr-2"> <i class="fab fa-twitter-square"></i></i></a>
+                                <a href="https://www.instagram.com/shafin5714/?hl=en" class="mr-2"> <i class="fab fa-instagram"></i></a>
+                                <a href="https://github.com/Shafin5714" class="mr-2"> <i class="fab fa-github"></i></a>
 
 
                             </div>
@@ -120,61 +119,52 @@
                     <h2 class="text-center my-3">Popular posts</h2>
                     <hr>
                     <ul>
+                      <% popular.forEach(element => { %>
                         <li>
-                            <a href="#">
+                            <a href="dashboard/post/<%=element._id%>">
                                 <div class="media">
-                                    <img class="mr-3" src="./img/image1.jpg" alt="Generic placeholder image"
+                                    <img class="mr-3" src="<%=element.thumbnail%> " alt="Generic placeholder image"
                                         width="80" height="50">
                                     <div class="media-body">
-                                        <h5 class="mt-0">How to Find the Video Games of Your Youth</h5>
+                                        <p class="mt-0"><%=element.title%></p>
                                         <div class="time-comment mt-2">
-                                            <span class="mr-2">March 15, 2018 </span>
+                                            <span class="mr-2"><%= moment(element.createdAt).format('MMMM Do YYYY') %> </span>
 
                                         </div>
                                     </div>
                                 </div>
                             </a>
                         </li>
-                        <li>
-                            <a href="#">
-                                <div class="media">
-                                    <img class="mr-3" src="./img/image2.jpeg" alt="Generic placeholder image"
-                                        width="80" height="50">
-                                    <div class="media-body">
-                                        <h5 class="mt-0">How to Find the Video Games of Your Youth</h5>
-                                        <div class="time-comment mt-2">
-                                            <span class="mr-2">March 15, 2018 </span>
-
-                                        </div>
-                                    </div>
-                                </div>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="#">
-                                <div class="media">
-                                    <img class="mr-3" src="./img/image3.jpg" alt="Generic placeholder image"
-                                        width="80" height="50">
-                                    <div class="media-body">
-                                        <h5 class="mt-0">How to Find the Video Games of Your Youth</h5>
-                                        <div class="time-comment">
-                                            <span class="mr-2">March 15, 2018 </span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </a>
-                        </li>
+                      <% }) %> 
+                      
+                        
+                        
                     </ul>
                 </div>
                 <!-- Categories -->
                 <div class="category-box">
                     <h3 class="heading">Categories</h3>
+                   
                     <ul class="categories  text-start">
-                        <li><a href="#">Food <span>(12)</span></a></li>
-                        <li><a href="#">Travel <span>(22)</span></a></li>
-                        <li><a href="#">Lifestyle <span>(37)</span></a></li>
-                        <li><a href="#">Business <span>(42)</span></a></li>
-                        <li><a href="#">Adventure <span>(14)</span></a></li>
+                        <% ntotal.forEach(element => { %>
+                            <% if (element._id==='Technology') { %>
+                                <li><a href="/category?name=Technology">Technology <span>(<%=element.count%>)</span></a></li>
+                            <% } %>
+                            <% if (element._id==='Lifestyle') { %>
+                                <li><a href="/category?name=Lifestyle">Lifestyle <span>(<%=element.count%>)</span></a></li>
+                            <% } %>
+                            <% if (element._id==='Food'){ %>
+                                <li><a href="/category?name=Food">Food <span>(<%=element.count%>)</span></a></li>
+                            <% } %>
+                            <% if (element._id==='Food'){ %>
+                                <li><a href="/category?name=Food">Food <span>(<%=element.count%>)</span></a></li>
+                            <% } %>
+                            <% if (element._id==='Adventure'){ %>
+                                <li><a href="/category?name=Adventure">Adventure <span>(<%=element.count%>)</span></a></li>
+                            <% } %>
+                        <% }) %> 
+                               
+
                     </ul>
                 </div>
                 <!-- Tags -->
@@ -205,7 +195,7 @@
 <!-- Pagination  -->
 
 
-
+</div>
 <%- include('../partials/user/footer.ejs')  %> 
 
 <script src="/js/bookmarks.js"></script>

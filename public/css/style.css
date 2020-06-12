@@ -60,7 +60,7 @@ nav{
 /* latest post card */
 
 .l-post-card{
-  height: auto;
+  height: 360px;
   width: 350px;
   margin-bottom: 30px;
 }
@@ -414,8 +414,8 @@ footer{
 }
 
 .p-post-card{
-  width: auto;
-  height: auto;
+  width: 350px;
+  height: 350px;
   cursor: pointer;
 }
 .p-post-card:hover{
