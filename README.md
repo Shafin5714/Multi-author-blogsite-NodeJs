@@ -10,7 +10,7 @@ This is a web application for blogging
 * User profile.
 * Edit profile.
 * Crop image while setting profile picture.
-* User authentication with passportjs (Sing up with google).
+* User authentication with passportjs (Sign up with google).
 * Bookmark post.
 * Like/Dislike blog.
 * Comment and replay 
