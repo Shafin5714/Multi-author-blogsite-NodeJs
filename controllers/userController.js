@@ -95,23 +95,23 @@ exports.index =async(req,res)=>{
     let total = await Post.aggregate([
         {
             $facet: {
-              authors: [
-                // Count the number of books published in a given year
+              categories: [ // any name
+                // Count the number of categories 
                 {
                   $group: {
                     _id: '$category',
                     count: { $sum: 1 }
                   }
                 },
-                // Sort by author name ascending
+                // Sort by category name ascending
                 { $sort: { count: -1, _id: 1 } }
               ]
             }
           }
        
       ])
-    // console.log(total[0].authors);
-    let ntotal = total[0].authors
+    // console.log(total[0].categories);
+    let ntotal = total[0].categories
     // console.log(ntotal);
 
     // Popular posts
@@ -239,20 +239,38 @@ exports.userCreateProfilePostController = async(req,res,next)=>{
 
 }
 
+// View profile redirect
+exports.viewProfileRedirect = async(req,res,next)=>{
+    try {
+    let profileId = req.params.profileId
+    if(!profileId){
+        return res.redirect('/user/create-profile')
+    }
+    } catch (err) {
+        next(err);
+    }
+    
+    
+    
+}
 
 // View Profile
 exports.userViewProfileController = async(req,res,next)=>{
     try {
     let profileId = req.params.profileId
+    console.log(profileId);
     let profile =await Profile.findOne({_id:profileId}).populate('posts')
-    // console.log(profile);
+    console.log(profile);
     
-     if(profile){
-        res.render('pages/profile',{user:req.user,profile:profile,posts:profile.posts,moment})
+     if(!profile){
+        return res.redirect('/user/profile')
      }else{
-         res.render("pages/create-profile",{user:req.user})
+        res.render('pages/profile',{user:req.user,profile:profile,posts:profile.posts,moment})
+         
+         
      }
     } catch (error) {
+        
         next(error);
         
     }

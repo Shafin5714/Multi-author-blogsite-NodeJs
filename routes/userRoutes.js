@@ -29,12 +29,15 @@ router.route('/dashboard').get(userController.index)
 // View post details
 router.route('/dashboard/post/:postId').get(userController.userViewPostGetController)
 
+// view profile
+router.route('/user/profile').get(isUserAuthenticated,userController.viewProfileRedirect)
+router.route('/user/profile/:profileId').get(isUserAuthenticated,userController.userViewProfileController)
+
 // Profile Routes
 router.route('/user/edit-profile').get(isUserAuthenticated,userController.userEditProfileGetController).post(userController.userEditProfilePostController)
 router.route('/user/create-profile').get(isUserAuthenticated,userController.userCreateProfileGetController).post(userController.userCreateProfilePostController)
 
-// view profile
-router.route('/user/profile/:profileId').get(userController.userViewProfileController)
+
 
 
 // Login Routes
