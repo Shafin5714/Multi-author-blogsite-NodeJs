@@ -64,7 +64,7 @@ router.get('/auth/google',passport.authenticate('google',{
 }))
 
 // callback for google
-router.get('/auth/google/redirect',passport.authenticate('google'),(req,res)=>{
+router.get('http://shafin5714-blog.herokuapp.com/auth/google/redirect',passport.authenticate('google'),(req,res)=>{
     // res.send(req.user)  ///user provided by passport
     // console.log(user);
     if(!req.user.username){
