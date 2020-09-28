@@ -249,6 +249,8 @@ exports.userViewProfileController = async(req,res,next)=>{
     
      if(profile){
         res.render('pages/profile',{user:req.user,profile:profile,posts:profile.posts,moment})
+     }else{
+         res.render("pages/create-profile",{user:req.user})
      }
     } catch (error) {
         next(error);
