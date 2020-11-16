@@ -13,13 +13,13 @@
                     <a href="/dashboard?filter=month" class="mr-1 btn <%= filter ==='month' ? 'btn-danger' :' btn-dark '%>">Month</a>
                     <a href="/dashboard?filter=all" class="mr-1 btn <%= filter ==='all' ? 'btn-danger' :' btn-dark ' %>">All</a>
                 </section>
-                <div class="row mb-5" >
+                <div class="row mb-3" >
                     <% post.forEach(p=>{ %>
-                    <div class="col-md-6 ">
+                    <div class="col-md-6 mt-3">
                         <!-- <a href="./blog-single.html"></a> -->
-                            <div class="card wow fadeInUp l-post-card">
+                            <div class="card wow fadeInUp l-post-card h-100">
                                 <img class="card-img-top img-fluid" src="<%=p.thumbnail %> " alt="Card image cap">
-                                <div class="card-body">
+                                <div class="card-body ">
                                    <a href="<%=`/dashboard/post/${p._id}`%> "> <h5 class="card-title"><%=p.title %> </h5></a>
                                     <div class="d-flex author-post text-muted">
                                         <span><img class="mr-2 img-fluid" src="<%=p.author.profileImage %> " alt=""></span>
