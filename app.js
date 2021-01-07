@@ -57,10 +57,12 @@ app.use('/',userRoute)
 
 // 404 page
 app.get('*', (req, res) => {
+    console.log("HERE");
     res.status(404).render('pages/error/404',{user:req.user});
 });// (*)This is a special character which matches anything. This can be used to create a route handler that matches all requests.
 
 app.use((error,req,res,next)=>{
+    
     res.status = error.status || 500
     // res.json({
     //     error:{

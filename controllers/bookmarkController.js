@@ -9,19 +9,33 @@ exports.bookmarksGetController = async (req,res)=>{
         })
     }
     let userId = req.user._id
+    console.log(userId);
     let bookmark = null
+
     try{
+        
         let profile = await Profile.findOne({user:userId})
-        if(profile.bookmarks.includes(postId)){
-            await Profile.findOneAndUpdate({user:userId},{$pull:{'bookmarks':postId}})
-            bookmark = false
+        if(!profile){
+          res.status(301).redirect("/user/create-profile")
+          next()
+          
+            
         }else{
-            await Profile.findOneAndUpdate({user:userId},{$push:{'bookmarks':postId}})
-            bookmark = true
+            console.log("GG2");
+            if(profile.bookmarks.includes(postId)){
+                await Profile.findOneAndUpdate({user:userId},{$pull:{'bookmarks':postId}})
+                bookmark = false
+            }else{
+                await Profile.findOneAndUpdate({user:userId},{$push:{'bookmarks':postId}})
+                bookmark = true
+            }
+            res.status(200).json({
+                bookmark
+            })
         }
-        res.status(200).json({
-            bookmark
-        })
+       
+       
+        
 
     }catch(e){
         console.log(e);
@@ -36,7 +50,9 @@ exports.getAllBookmarksByUser = async(req,res)=>{
 
     try {
         let profile = await Profile.findOne({user:req.user._id}).populate({path:'bookmarks',select:'title thumbnail'})
-        console.log(profile);
+        if(!profile){
+           return res.redirect('/user/create-profile')
+        }
         
         res.render('pages/bookmarks',{user:req.user,posts:profile.bookmarks})
 

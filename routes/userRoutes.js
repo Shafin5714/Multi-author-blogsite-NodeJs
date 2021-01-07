@@ -136,6 +136,9 @@ router.route('/user/posts').get(isUserAuthenticated,userController.getUserPostsC
 
 
 // Comment routes
+
+// All comments
+router.route('/comments').get(isUserAuthenticated,commentController.getAllUserComments)
 router.route('/user/comments/:postId').post(isUserAuthenticated,commentController.commentPostController)
 router.route('/user/replies/:commentId').post(isUserAuthenticated, commentController.replayCommentPostController)
 
@@ -143,14 +146,13 @@ router.route('/user/replies/:commentId').post(isUserAuthenticated, commentContro
 router.route('/user/likes/:postId').get(isUserAuthenticated,likesDislikeController.likesGetController)
 router.route('/user/dislikes/:postId').get(isUserAuthenticated,likesDislikeController.dislikesGetController)
 
-// Bookmarks
-router.route('/user/bookmark/:postId').get(isUserAuthenticated,bookmarkController.bookmarksGetController)
 
 // All Bookmarks
 router.route('/bookmarks').get(isUserAuthenticated, bookmarkController.getAllBookmarksByUser)
 
-// All comments
-router.route('/comments').get(isUserAuthenticated,commentController.getAllUserComments)
+// Bookmarks
+router.route('/user/bookmark/:postId').get(isUserAuthenticated,bookmarkController.bookmarksGetController)
+
 
 // Search route
 router.route('/search').get(searchController.getSearchResult)

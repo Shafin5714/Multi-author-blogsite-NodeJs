@@ -6,19 +6,15 @@ window.onload = function (){
         bookmark.addEventListener('click',function(e){
             // clicking on icon but we want the value of parent span
             let target = e.target.parentElement
-            console.log(target);
-            
-            let headers = new Headers()
-            headers.append('Accept','Application/JSON')
-            let req = new Request(`/user/bookmark/${target.dataset.post}`,{
-                method: 'GET',
-                headers,
-                mode:'cors'
-            })
-                      
-            fetch(req).then(res=>res.json()).then(data=>{
-                // console.log(data);
-                
+
+            fetch(`/user/bookmark/${target.dataset.post}`,{
+                method: 'GET', 
+                mode: "cors",
+                headers: {
+                    "Accept": "application/json",
+                },
+            }).then(res=>res.json()).then(data=>{
+             
                 if(data.bookmark){
                     console.log(data.bookmark); 
                     target.innerHTML = '<i class="fas fa-bookmark"></i>'
@@ -31,6 +27,7 @@ window.onload = function (){
                 }
             })
             .catch(e=>{
+                window.location.href = "/user/create-profile";
                 console.error(e.response.data)
                 alert(e.response.data.error)
             })
